@@ -10,6 +10,7 @@ import {
   serverTimestamp,
   doc,
   deleteDoc,
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
 import {
   getAuth,
@@ -47,6 +48,7 @@ onAuthStateChanged(auth, (user) => {
         const docRef = await addDoc(collection(db, currentUserUID), {
           title: title,
           inputText: inputText,
+          id: generateUniqueId(),
           createdAt: serverTimestamp(),
         });
         const globalBlog = await addDoc(collection(db, "global"), {
@@ -78,6 +80,7 @@ window.addEventListener("load", () => {
       const post = document.createElement("div");
       // post.innerText = doc.data().inputText;
       post.classList.add("post");
+      post.id = doc.data().id;
       const title = document.createElement("div");
       title.classList.add("title");
       title.innerText = doc.data().title;
@@ -87,7 +90,7 @@ window.addEventListener("load", () => {
 
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("btn");
-      deleteBtn.id = `${doc.id}`;
+      deleteBtn.id = `${doc.data().id}`;
       deleteBtn.innerText = "Delete";
 
       const editBtn = document.createElement("button");
@@ -99,10 +102,45 @@ window.addEventListener("load", () => {
       post.appendChild(deleteBtn);
       post.appendChild(editBtn);
       blogSection.appendChild(post);
-      deleteBtn.addEventListener("click", () => deletePostFunc(doc.id));
-      editBtn.addEventListener("click", () =>
-        editPostFunc(doc.id, doc.data().inputText)
+      deleteBtn.addEventListener("click", () =>
+        deletePostFunc(doc.id, doc.data().id)
       );
+      //   editBtn.addEventListener("click", () =>
+      //     editPostFunc(doc.id, doc.data().inputText)
+      //   );
     });
   });
 });
+
+const deletePostFunc = async (id, globalId) => {
+  try {
+    // Delete from user's personal collection
+    await deleteDoc(doc(db, currentUserUID, id));
+
+    // Delete from global collection
+    const globalQuerySnapshot = await getDocs(
+      query(collection(db, "global"), where("id", "==", globalId))
+    );
+    globalQuerySnapshot.forEach(async (doc) => {
+      if (doc.data().id === globalId) {
+        await deleteDoc(doc.ref);
+      }
+    });
+
+    console.log("Document deleted successfully");
+  } catch (error) {
+    console.error("Error deleting document: ", error);
+  }
+};
+
+const generateUniqueId = () => {
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const length = 10;
+  let uniqueId = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    uniqueId += characters.charAt(randomIndex);
+  }
+  return `id-${uniqueId}`;
+};
