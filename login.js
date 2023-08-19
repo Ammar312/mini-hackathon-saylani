@@ -31,6 +31,12 @@ loginForm.addEventListener("submit", (e) => {
       const user = userCredential.user;
       console.log("user", user);
       console.log(userCredential);
+      const currentUserUID = user.uid;
+      const currentUserName = user.displayName;
+      sessionStorage.setItem("currentUserUID", currentUserUID);
+      sessionStorage.setItem("currentUserName", currentUserName);
+      console.log(currentUserName);
+      console.log(currentUserUID);
       displayAlert("Login Successfully", "green");
 
       setTimeout(() => {
