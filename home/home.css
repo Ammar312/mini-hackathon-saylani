@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+body {
+  width: 100%;
+  min-height: 100vh;
+}
+.nav {
+  width: 100%;
+  padding: 1em 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(133, 9, 133);
+  color: white;
+}
+.webName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: "Raleway", sans-serif;
+}
+.jump {
+  font-size: 1.2rem;
+}
+.rightSide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6em;
+}
