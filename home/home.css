@@ -33,3 +33,49 @@ body {
   align-items: center;
   gap: 0.6em;
 }
+.dashboard {
+  padding: 1em 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid whitesmoke;
+  margin-bottom: 1em;
+}
+.formContainer {
+  width: 600px;
+  padding: 3em;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.233);
+  border: 1px solid whitesmoke;
+}
+.blogForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+.blogFormTitle {
+  padding: 0.3em;
+  font-size: 1.2rem;
+  border-radius: 13px;
+  border: 1px solid rgb(230, 230, 230);
+  outline: blue;
+}
+.blogFormText {
+  height: 6em;
+  padding: 0.3em;
+  font-size: 1.2rem;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid rgb(230, 230, 230);
+}
+.blogFormBtn {
+  max-width: 11em;
+  font-size: 1.2rem;
+  padding: 0.5em 1em;
+  border-radius: 7px;
+  background: blue;
+  color: white;
+  border: none;
+}
+.myBlog {
+  margin: 1em;
+}

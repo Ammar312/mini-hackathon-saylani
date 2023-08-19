@@ -41,6 +41,7 @@ onAuthStateChanged(auth, (user) => {
     const blogForm = document.querySelector("#blogForm");
     blogForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const blogId = generateUniqueId();
       const title = document.querySelector("#title").value;
       const inputText = document.querySelector("#inputText").value;
       console.log(inputText);
@@ -48,12 +49,13 @@ onAuthStateChanged(auth, (user) => {
         const docRef = await addDoc(collection(db, currentUserUID), {
           title: title,
           inputText: inputText,
-          id: generateUniqueId(),
+          id: blogId,
           createdAt: serverTimestamp(),
         });
         const globalBlog = await addDoc(collection(db, "global"), {
           title: title,
           inputText: inputText,
+          id: blogId,
           createdAt: serverTimestamp(),
         });
         // form.reset();
@@ -78,16 +80,32 @@ window.addEventListener("load", () => {
     blogSection.innerHTML = "";
     querySnapshot.forEach((doc) => {
       const post = document.createElement("div");
-      // post.innerText = doc.data().inputText;
       post.classList.add("post");
       post.id = doc.data().id;
+      const head = document.createElement("div");
+      head.classList.add("head");
+      const userImg = document.createElement("div");
+      userImg.innerHTML = `<i class="bi bi-person"></i>`;
+      userImg.classList.add("userImg");
+      const head2Div = document.createElement("div");
+      head2Div.classList.add("head2Div");
       const title = document.createElement("div");
       title.classList.add("title");
       title.innerText = doc.data().title;
+      const displayName = document.createElement("div");
+      displayName.classList.add("displayName");
+      displayName.innerText = userName;
+      head2Div.appendChild(title);
+      head2Div.appendChild(displayName);
+      head.appendChild(userImg);
+      head.appendChild(head2Div);
+
       const inputText = document.createElement("div");
       inputText.classList.add("inputText");
       inputText.innerText = doc.data().inputText;
 
+      const btnDiv = document.createElement("div");
+      btnDiv.classList.add("btnDiv");
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("btn");
       deleteBtn.id = `${doc.data().id}`;
@@ -97,13 +115,15 @@ window.addEventListener("load", () => {
       editBtn.classList.add("btn");
       editBtn.id = `${doc.id}`;
       editBtn.innerText = "Edit";
-      post.appendChild(title);
+      btnDiv.appendChild(deleteBtn);
+      btnDiv.appendChild(editBtn);
+      post.appendChild(head);
       post.appendChild(inputText);
-      post.appendChild(deleteBtn);
-      post.appendChild(editBtn);
+      post.appendChild(btnDiv);
+
       blogSection.appendChild(post);
       deleteBtn.addEventListener("click", () =>
-        deletePostFunc(doc.id, doc.data().id)
+        deletePostFunc(doc.id, doc.data().title)
       );
       //   editBtn.addEventListener("click", () =>
       //     editPostFunc(doc.id, doc.data().inputText)
@@ -119,10 +139,10 @@ const deletePostFunc = async (id, globalId) => {
 
     // Delete from global collection
     const globalQuerySnapshot = await getDocs(
-      query(collection(db, "global"), where("id", "==", globalId))
+      query(collection(db, "global"), where("title", "==", globalId))
     );
     globalQuerySnapshot.forEach(async (doc) => {
-      if (doc.data().id === globalId) {
+      if (doc.data().title === globalId) {
         await deleteDoc(doc.ref);
       }
     });
