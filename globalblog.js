@@ -23,7 +23,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+const userName = sessionStorage.getItem("currentUserName");
+const username = document.querySelector("#username");
+username.innerText = userName;
 window.addEventListener("load", () => {
   const q = query(collection(db, "global"), orderBy("createdAt", "desc"));
   const globalBlogSection = document.querySelector("#globalBlogSection");
@@ -31,33 +33,33 @@ window.addEventListener("load", () => {
     globalBlogSection.innerHTML = "";
     querySnapshot.forEach((doc) => {
       const post = document.createElement("div");
-      // post.innerText = doc.data().inputText;
       post.classList.add("post");
+      post.id = doc.data().id;
+      const head = document.createElement("div");
+      head.classList.add("head");
+      const userImg = document.createElement("div");
+      userImg.innerHTML = `<i class="bi bi-person"></i>`;
+      userImg.classList.add("userImg");
+      const head2Div = document.createElement("div");
+      head2Div.classList.add("head2Div");
       const title = document.createElement("div");
       title.classList.add("title");
       title.innerText = doc.data().title;
+      const displayName = document.createElement("div");
+      displayName.classList.add("displayName");
+      displayName.innerText = userName;
+      head2Div.appendChild(title);
+      head2Div.appendChild(displayName);
+      head.appendChild(userImg);
+      head.appendChild(head2Div);
+
       const inputText = document.createElement("div");
       inputText.classList.add("inputText");
       inputText.innerText = doc.data().inputText;
-
-      const deleteBtn = document.createElement("button");
-      deleteBtn.classList.add("btn");
-      deleteBtn.id = `${doc.id}`;
-      deleteBtn.innerText = "Delete";
-
-      const editBtn = document.createElement("button");
-      editBtn.classList.add("btn");
-      editBtn.id = `${doc.id}`;
-      editBtn.innerText = "Edit";
-      post.appendChild(title);
+      post.appendChild(head);
       post.appendChild(inputText);
-      // post.appendChild(deleteBtn);
-      // post.appendChild(editBtn);
+
       globalBlogSection.appendChild(post);
-      // deleteBtn.addEventListener("click", () => deletePostFunc(doc.id));
-      // editBtn.addEventListener("click", () =>
-      //   editPostFunc(doc.id, doc.data().inputText)
-      // );
     });
   });
 });

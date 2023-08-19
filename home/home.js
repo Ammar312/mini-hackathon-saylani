@@ -30,7 +30,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const auth = getAuth();
+
 const userName = sessionStorage.getItem("currentUserName");
+const username = (document.querySelector("#username").innerText = userName);
 const currentUserUID = sessionStorage.getItem("currentUserUID");
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -58,7 +60,7 @@ onAuthStateChanged(auth, (user) => {
           id: blogId,
           createdAt: serverTimestamp(),
         });
-        // form.reset();
+        blogForm.reset();
         console.log("Document written with ID: ", docRef.id);
       } catch (e) {
         console.error("Error adding document: ", e);
@@ -125,9 +127,9 @@ window.addEventListener("load", () => {
       deleteBtn.addEventListener("click", () =>
         deletePostFunc(doc.id, doc.data().title)
       );
-      //   editBtn.addEventListener("click", () =>
-      //     editPostFunc(doc.id, doc.data().inputText)
-      //   );
+      editBtn.addEventListener("click", () =>
+        editPostFunc(doc.id, doc.data().title, doc.data().inputText)
+      );
     });
   });
 });
@@ -164,3 +166,22 @@ const generateUniqueId = () => {
   }
   return `id-${uniqueId}`;
 };
+
+const editPostFunc = (id, title, text) => {
+  document.querySelector("#editFormDiv").style.display = "block";
+  const editForm = document.querySelector("#editForm");
+  const editFormTitle = document.querySelector("#editFormTitle");
+  const editFormText = document.querySelector("#editFormText");
+  editFormTitle.value = title;
+  editFormText.value = text;
+  editForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    document.querySelector("#editFormDiv").style.display = "none";
+  });
+};
+
+const cross = document.querySelector("#cross");
+cross.addEventListener("click", () => {
+  const editFormDiv = document.querySelector("#editFormDiv");
+  editFormDiv.style.display = "none";
+});
