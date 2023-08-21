@@ -33,6 +33,20 @@ body {
   align-items: center;
   gap: 0.6em;
 }
+.dashboard {
+  padding: 1em 0.5em;
+  border: 1px solid whitesmoke;
+  margin-bottom: 1em;
+}
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  width: 881px;
+  height: 748px;
+  margin: 3em 6em;
+  padding: 1.5em;
+  border: 1px solid#DEE2E6;
+}
 @media screen and (min-width: 600px) {
   .webName {
     font-size: 2rem;
