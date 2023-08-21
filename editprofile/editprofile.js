@@ -30,6 +30,8 @@ onAuthStateChanged(auth, (user) => {
     // https://firebase.google.com/docs/reference/js/auth.user
     const uid = user.uid;
     console.log(user.auth.currentUser);
+    const displayName = document.querySelector("#displayName");
+    displayName.value = user.auth.currentUser.displayName;
     // ...
   } else {
     // User is signed out

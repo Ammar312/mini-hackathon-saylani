@@ -29,7 +29,7 @@ signupForm.addEventListener("submit", (e) => {
   if (signupPassword === signupConfirmPassword) {
     const firstName = document.querySelector("#firstname").value;
     const lastName = document.querySelector("#lastname").value;
-    const userName = firstName + lastName;
+    const userName = `${firstName} ${lastName}`;
     console.log(userName);
     const signupEmail = document.querySelector("#signupEmail").value;
     const signupPassword = document.querySelector("#signupPassword").value;

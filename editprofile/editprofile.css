@@ -47,6 +47,31 @@ body {
   padding: 1.5em;
   border: 1px solid#DEE2E6;
 }
+.displayName {
+  border: 1px solid yellow;
+}
+.displayName input {
+  border: none;
+  padding: 0.3em;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.displayName i {
+  color: blueviolet;
+  cursor: pointer;
+}
+.password {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+.password input {
+  width: 14em;
+  padding: 0.3;
+  font-size: 1.2rem;
+  border-radius: 4px;
+}
+
 @media screen and (min-width: 600px) {
   .webName {
     font-size: 2rem;
