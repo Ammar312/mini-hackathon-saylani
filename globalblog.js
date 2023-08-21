@@ -26,6 +26,7 @@ const db = getFirestore(app);
 const userName = sessionStorage.getItem("currentUserName");
 const username = document.querySelector("#username");
 username.innerText = userName;
+const publishDate = new Date().toDateString();
 window.addEventListener("load", () => {
   const q = query(collection(db, "global"), orderBy("createdAt", "desc"));
   const globalBlogSection = document.querySelector("#globalBlogSection");
@@ -45,11 +46,18 @@ window.addEventListener("load", () => {
       const title = document.createElement("div");
       title.classList.add("title");
       title.innerText = doc.data().title;
+      const displayNameAndDate = document.createElement("div");
+      displayNameAndDate.classList.add("displayNameAndDate");
       const displayName = document.createElement("div");
       displayName.classList.add("displayName");
       displayName.innerText = userName;
+      const dateString = document.createElement("span");
+      dateString.classList.add("dateString");
+      dateString.innerText = ` - ${publishDate}`;
+      displayNameAndDate.appendChild(displayName);
+      displayNameAndDate.appendChild(dateString);
       head2Div.appendChild(title);
-      head2Div.appendChild(displayName);
+      head2Div.appendChild(displayNameAndDate);
       head.appendChild(userImg);
       head.appendChild(head2Div);
 
