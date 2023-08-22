@@ -3,6 +3,7 @@ import {
   getAuth,
   updateProfile,
   onAuthStateChanged,
+  updatePassword,
 } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,13 +27,60 @@ const username = (document.querySelector("#username").innerText = userName);
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
     const uid = user.uid;
     console.log(user.auth.currentUser);
     const displayName = document.querySelector("#displayName");
     displayName.value = user.auth.currentUser.displayName;
-    // ...
+    const editPenForDisplayName = document.querySelector(
+      "#editPenForDisplayName"
+    );
+    editPenForDisplayName.addEventListener("click", () => {
+      displayName.disabled = false;
+      displayName.style.border = "1px solid gray";
+      editPenForDisplayName.style.display = "none";
+    });
+    document
+      .querySelector("#updateDisplayNameForm")
+      .addEventListener("submit", (e) => {
+        e.preventDefault();
+        updateProfile(auth.currentUser, {
+          displayName: displayName.value,
+        })
+          .then(() => {
+            // Profile updated!
+            editPenForDisplayName.style.display = "block";
+            displayName.disabled = true;
+            displayName.style.border = "none";
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+
+    const updatePasswordForm = document.querySelector("#updatePasswordForm");
+    updatePasswordForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const oldPassword = document.querySelector("#oldPassword").value;
+      const newPassword = document.querySelector("#newPassword").value;
+      const confirmPassword = document.querySelector("#confirmPassword").value;
+
+      if (newPassword === confirmPassword) {
+        const user = auth.currentUser;
+        const newPassword = confirmPassword;
+
+        updatePassword(user, newPassword)
+          .then(() => {
+            // Update successful.
+            console.log("Password Updated");
+            updatePasswordForm.reset();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("password must be same");
+      }
+    });
   } else {
     // User is signed out
     // ...

@@ -23,23 +23,33 @@
       <h1>Profile</h1>
     </div>
     <div class="profileSection">
-      <form>
-        <div class="userImg">
-          <input type="file" />
-        </div>
+      <div class="userImg">
+        <input type="file" />
+      </div>
+      <form id="updateDisplayNameForm">
         <div class="displayName">
           <input type="text" id="displayName" disabled />
-          <i class="bi bi-pen-fill"></i>
+          <i class="bi bi-pen-fill" id="editPenForDisplayName"></i>
         </div>
-        <h2>Password</h2>
+      </form>
+      <h2>Password</h2>
+      <form id="updatePasswordForm">
         <div class="password">
-          <input type="password" id="oldPassword" placeholder="Old Password" />
+          <input
+            type="password"
+            id="oldPassword"
+            placeholder="Old Password"
+            required
+          />
           <input type="password" id="newPassword" placeholder="New Password" />
           <input
             type="password"
             id="confirmPassword"
             placeholder="Confirm Password"
           />
+          <button type="submit" class="updatePasswordBtn">
+            Update Password
+          </button>
         </div>
       </form>
     </div>
