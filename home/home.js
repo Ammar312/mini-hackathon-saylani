@@ -38,6 +38,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/auth.user
+    const publishDate = new Date().toDateString();
     const uid = user.uid;
     console.log(user);
     const blogForm = document.querySelector("#blogForm");
@@ -48,17 +49,23 @@ onAuthStateChanged(auth, (user) => {
       const inputText = document.querySelector("#inputText").value;
       console.log(inputText);
       try {
-        const docRef = await addDoc(collection(db, currentUserUID), {
+        const docRef = await addDoc(collection(db, uid), {
+          userUID: uid,
           title: title,
           inputText: inputText,
           id: blogId,
           createdAt: serverTimestamp(),
+          date: publishDate,
+          personName: user.displayName,
         });
         const globalBlog = await addDoc(collection(db, "global"), {
           title: title,
+          userUID: uid,
           inputText: inputText,
           id: blogId,
           createdAt: serverTimestamp(),
+          date: publishDate,
+          personName: user.displayName,
         });
         blogForm.reset();
         console.log("Document written with ID: ", docRef.id);
@@ -75,7 +82,6 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-const publishDate = new Date().toDateString();
 window.addEventListener("load", () => {
   const q = query(collection(db, currentUserUID), orderBy("createdAt", "desc"));
   const blogSection = document.querySelector("#blogSection");
@@ -84,7 +90,7 @@ window.addEventListener("load", () => {
     querySnapshot.forEach((doc) => {
       const post = document.createElement("div");
       post.classList.add("post");
-      post.id = doc.data().id;
+      post.id = doc.data().userUID;
       const head = document.createElement("div");
       head.classList.add("head");
       const userImg = document.createElement("div");
@@ -99,10 +105,10 @@ window.addEventListener("load", () => {
       displayNameAndDate.classList.add("displayNameAndDate");
       const displayName = document.createElement("div");
       displayName.classList.add("displayName");
-      displayName.innerText = userName;
+      displayName.innerText = doc.data().personName;
       const dateString = document.createElement("span");
       dateString.classList.add("dateString");
-      dateString.innerText = ` - ${publishDate}`;
+      dateString.innerText = ` - ${doc.data().date}`;
       displayNameAndDate.appendChild(displayName);
       displayNameAndDate.appendChild(dateString);
       head2Div.appendChild(title);
