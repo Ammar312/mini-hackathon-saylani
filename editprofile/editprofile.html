@@ -24,7 +24,9 @@
     </div>
     <div class="profileSection">
       <div class="userImg">
-        <input type="file" />
+        <input type="file" id="fileInput" />
+        <progress value="0" max="100" id="uploadProgress"></progress>
+        <button id="uploadBtn">Upload</button>
       </div>
       <form id="updateDisplayNameForm">
         <div class="displayName">

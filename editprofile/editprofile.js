@@ -1,5 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
 import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "https://www.gstatic.com/firebasejs/10.2.0/firebase-storage.js";
+import {
   getAuth,
   updateProfile,
   onAuthStateChanged,
@@ -20,6 +26,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const storage = getStorage();
 
 const userName = sessionStorage.getItem("currentUserName");
 const username = (document.querySelector("#username").innerText = userName);
@@ -29,6 +36,42 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
     console.log(user.auth.currentUser);
+
+    // ------Edit Profile Image------
+    const uploadBtn = document.querySelector("#uploadBtn");
+    const uploadProgress = document.getElementById("uploadProgress");
+    uploadBtn.addEventListener("click", () => {
+      const fileInput = document.querySelector("#fileInput");
+      const file = fileInput.files[0];
+      console.log(file);
+      if (file) {
+        const storageRef = ref(storage, "images/" + file.name);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            uploadProgress.value = progress;
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+          },
+          () => {
+            console.log("Image uploaded successfully!");
+
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              console.log("File available at", downloadURL);
+            });
+          }
+        );
+      } else {
+        console.log("error in uploading");
+      }
+    });
+
+    // ----Edit Display Name-------
     const displayName = document.querySelector("#displayName");
     displayName.value = user.auth.currentUser.displayName;
     const editPenForDisplayName = document.querySelector(
