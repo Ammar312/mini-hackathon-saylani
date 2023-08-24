@@ -37,6 +37,9 @@ onAuthStateChanged(auth, (user) => {
     const uid = user.uid;
     console.log(user.auth.currentUser);
 
+    const profileimg = document.querySelector("#profileimg");
+    profileimg.src = user.auth.currentUser.photoURL;
+
     // ------Edit Profile Image------
     const uploadBtn = document.querySelector("#uploadBtn");
     const uploadProgress = document.getElementById("uploadProgress");
@@ -63,6 +66,9 @@ onAuthStateChanged(auth, (user) => {
 
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               console.log("File available at", downloadURL);
+              updateProfile(auth.currentUser, {
+                photoURL: downloadURL,
+              });
             });
           }
         );

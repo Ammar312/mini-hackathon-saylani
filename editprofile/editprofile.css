@@ -84,6 +84,15 @@ body {
   color: white;
   cursor: pointer;
 }
+.userImg input {
+  border: none;
+  background: black;
+}
+.image img {
+  width: 7em;
+  height: 10em;
+  border: 2px solid black;
+}
 
 @media screen and (min-width: 600px) {
   .webName {
