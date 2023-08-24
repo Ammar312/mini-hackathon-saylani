@@ -23,16 +23,23 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const userName = sessionStorage.getItem("currentUserName");
-const username = document.querySelector("#username");
-username.innerText = userName;
+const uid = sessionStorage.getItem("uid");
+const name = sessionStorage.getItem("name");
+console.log(name);
+document.querySelector("#blog").innerText = `All from ${name}`;
+
 // const publishDate = new Date().toDateString();
 window.addEventListener("load", () => {
-  const q = query(collection(db, "global"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, uid), orderBy("createdAt", "desc"));
   const globalBlogSection = document.querySelector("#globalBlogSection");
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     globalBlogSection.innerHTML = "";
     querySnapshot.forEach((doc) => {
+      //   const globalBlogDiv = document.createElement("div");
+      //   globalBlogDiv.classList.add("globalBlogDiv");
+      //   const headline = document.createElement("h2");
+      //   headline.classList.add("headline");
+      //   headline.innerText = `All from ${doc.data().personName}`;
       const post = document.createElement("div");
       post.classList.add("post");
       post.id = doc.data().userUID;
@@ -65,26 +72,11 @@ window.addEventListener("load", () => {
       inputText.classList.add("inputText");
       inputText.innerText = doc.data().inputText;
 
-      const button = document.createElement("button");
-      button.innerText = "See all from this user";
-      button.classList.add("button");
       post.appendChild(head);
       post.appendChild(inputText);
-      post.appendChild(button);
-
+      //   globalBlogDiv.append(headline);
+      //   globalBlogDiv.appendChild(post);
       globalBlogSection.appendChild(post);
-      button.addEventListener("click", () =>
-        seeAllBlog(doc.data().userUID, doc.data().personName)
-      );
     });
   });
 });
-
-const seeAllBlog = (uid, name) => {
-  sessionStorage.setItem("uid", uid);
-  sessionStorage.setItem("name", name);
-  console.log(name);
-  setTimeout(() => {
-    location.assign("userblog.html");
-  }, 1000);
-};
