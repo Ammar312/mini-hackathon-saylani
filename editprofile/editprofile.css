@@ -84,16 +84,45 @@ body {
   color: white;
   cursor: pointer;
 }
+.userImg {
+  border: 1px solid red;
+  width: 350px;
+}
 .userImg input {
-  border: none;
-  background: black;
+  display: none;
+}
+.file-upload {
+  /* border: 1px solid #ccc; */
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: blueviolet;
+  font-size: 1.3rem;
+  position: relative;
+  bottom: 2em;
+  left: 14em;
 }
 .image img {
-  width: 7em;
-  height: 10em;
+  width: 100%;
+  height: 304px;
   border: 2px solid black;
+  border-radius: 12px;
 }
-
+.uploadProgress {
+  height: 1.5em;
+  color: black;
+  display: none;
+}
+.uploadBtn {
+  font-size: 1.2rem;
+  padding: 0.5em;
+  color: white;
+  background: blue;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  display: none;
+}
 @media screen and (min-width: 600px) {
   .webName {
     font-size: 2rem;

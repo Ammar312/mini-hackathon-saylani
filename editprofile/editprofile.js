@@ -39,11 +39,16 @@ onAuthStateChanged(auth, (user) => {
 
     const profileimg = document.querySelector("#profileimg");
     profileimg.src = user.auth.currentUser.photoURL;
+    const fileUpload = document.querySelector("#fileUpload");
+    fileUpload.addEventListener("click", () => {
+      uploadBtn.style.display = "block";
+    });
 
     // ------Edit Profile Image------
     const uploadBtn = document.querySelector("#uploadBtn");
     const uploadProgress = document.getElementById("uploadProgress");
     uploadBtn.addEventListener("click", () => {
+      uploadProgress.style.display = "block";
       const fileInput = document.querySelector("#fileInput");
       const file = fileInput.files[0];
       console.log(file);
@@ -68,7 +73,17 @@ onAuthStateChanged(auth, (user) => {
               console.log("File available at", downloadURL);
               updateProfile(auth.currentUser, {
                 photoURL: downloadURL,
-              });
+              })
+                .then(() => {
+                  // Profile updated!
+                  uploadBtn.style.display = "none";
+                  setTimeout(() => {
+                    uploadProgress.style.display = "none";
+                  }, 2000);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
             });
           }
         );

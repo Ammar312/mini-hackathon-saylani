@@ -27,12 +27,18 @@
         <div class="image">
           <img src="" alt="" id="profileimg" />
         </div>
-        <label for="">
+        <label for="fileInput" id="fileUpload" class="file-upload">
           <input type="file" id="fileInput" />
+
           <i class="bi bi-pen-fill"></i>
         </label>
-        <progress value="0" max="100" id="uploadProgress"></progress>
-        <button id="uploadBtn">Upload</button>
+        <progress
+          value="0"
+          max="100"
+          id="uploadProgress"
+          class="uploadProgress"
+        ></progress>
+        <button id="uploadBtn" class="uploadBtn">Upload</button>
       </div>
       <form id="updateDisplayNameForm">
         <div class="displayName">
