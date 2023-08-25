@@ -26,6 +26,13 @@ const db = getFirestore(app);
 const userName = sessionStorage.getItem("currentUserName");
 const username = document.querySelector("#username");
 username.innerText = userName;
+const greetings = document.querySelector("#greetings");
+const greetingFunc = () => {
+  const currentTime = new Date();
+  const currentHour = currentTime.getHours();
+  console.log(currentHour);
+};
+
 // const publishDate = new Date().toDateString();
 window.addEventListener("load", () => {
   const q = query(collection(db, "global"), orderBy("createdAt", "desc"));
