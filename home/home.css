@@ -104,7 +104,10 @@ body {
 }
 .userImg {
   font-size: 2.5rem;
-  background: rgb(212, 212, 212);
+  /* background: rgb(212, 212, 212); */
+  border: 1px solid #ccc;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 1em;
   height: 1em;
   border-radius: 5px;

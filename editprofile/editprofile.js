@@ -38,7 +38,11 @@ onAuthStateChanged(auth, (user) => {
     console.log(user.auth.currentUser);
 
     const profileimg = document.querySelector("#profileimg");
-    profileimg.src = user.auth.currentUser.photoURL;
+    if (user.auth.currentUser.photoURL === null) {
+      profileimg.style.backgroundImage = "url('../fall.png')";
+    } else {
+      profileimg.style.backgroundImage = `url(${user.auth.currentUser.photoURL})`;
+    }
     const fileUpload = document.querySelector("#fileUpload");
     fileUpload.addEventListener("click", () => {
       uploadBtn.style.display = "block";

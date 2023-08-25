@@ -57,6 +57,7 @@ onAuthStateChanged(auth, (user) => {
           createdAt: serverTimestamp(),
           date: publishDate,
           personName: user.displayName,
+          imageURL: user.auth.currentUser.photoURL,
         });
         const globalBlog = await addDoc(collection(db, "global"), {
           title: title,
@@ -66,6 +67,7 @@ onAuthStateChanged(auth, (user) => {
           createdAt: serverTimestamp(),
           date: publishDate,
           personName: user.displayName,
+          imageURL: user.auth.currentUser.photoURL,
         });
         blogForm.reset();
         console.log("Document written with ID: ", docRef.id);
@@ -94,7 +96,12 @@ window.addEventListener("load", () => {
       const head = document.createElement("div");
       head.classList.add("head");
       const userImg = document.createElement("div");
-      userImg.innerHTML = `<i class="bi bi-person"></i>`;
+      userImg.style.backgroundImage =
+        doc.data().imageURL !== null
+          ? `url(${doc.data().imageURL})`
+          : "url('../fall.png')";
+      // "url('../fall.png')"
+      // userImg.innerHTML = `<i class="bi bi-person"></i>`;
       userImg.classList.add("userImg");
       const head2Div = document.createElement("div");
       head2Div.classList.add("head2Div");

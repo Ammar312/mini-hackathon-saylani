@@ -85,7 +85,7 @@ body {
   cursor: pointer;
 }
 .userImg {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 350px;
 }
 .userImg input {
@@ -102,8 +102,10 @@ body {
   bottom: 2em;
   left: 14em;
 }
-.image img {
+.image div {
   width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 304px;
   border: 2px solid black;
   border-radius: 12px;
