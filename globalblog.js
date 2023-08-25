@@ -23,15 +23,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const userName = sessionStorage.getItem("currentUserName");
-const username = document.querySelector("#username");
-username.innerText = userName;
 const greetings = document.querySelector("#greetings");
 const greetingFunc = () => {
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
   console.log(currentHour);
+  let greeting;
+  if (currentHour < 12) {
+    greeting = "Good Morning Readers!";
+  } else if (currentHour < 18) {
+    greeting = "Good Afternoon Readers!";
+  } else {
+    greeting = "Good Evening Readers!";
+  }
+  return greeting;
 };
+greetings.innerText = greetingFunc();
 
 // const publishDate = new Date().toDateString();
 window.addEventListener("load", () => {
