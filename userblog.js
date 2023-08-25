@@ -32,8 +32,10 @@ document.querySelector("#blog").innerText = `All from ${name}`;
 window.addEventListener("load", () => {
   const q = query(collection(db, uid), orderBy("createdAt", "desc"));
   const globalBlogSection = document.querySelector("#globalBlogSection");
+  const picture = document.querySelector("#picture");
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     globalBlogSection.innerHTML = "";
+    picture.innerHTML = "";
     querySnapshot.forEach((doc) => {
       //   const globalBlogDiv = document.createElement("div");
       //   globalBlogDiv.classList.add("globalBlogDiv");
@@ -46,7 +48,11 @@ window.addEventListener("load", () => {
       const head = document.createElement("div");
       head.classList.add("head");
       const userImg = document.createElement("div");
-      userImg.innerHTML = `<i class="bi bi-person"></i>`;
+      userImg.style.backgroundImage =
+        doc.data().imageURL !== null
+          ? `url(${doc.data().imageURL})`
+          : "url('../fall.png')";
+      // userImg.innerHTML = `<i class="bi bi-person"></i>`;
       userImg.classList.add("userImg");
       const head2Div = document.createElement("div");
       head2Div.classList.add("head2Div");
@@ -77,6 +83,14 @@ window.addEventListener("load", () => {
       //   globalBlogDiv.append(headline);
       //   globalBlogDiv.appendChild(post);
       globalBlogSection.appendChild(post);
+      const pictureDiv = document.createElement("div");
+      pictureDiv.classList.add("pictureDiv");
+      pictureDiv.style.backgroundImage =
+        doc.data().imageURL !== null
+          ? `url(${doc.data().imageURL})`
+          : "url('../fall.png')";
+
+      picture.appendChild(pictureDiv);
     });
   });
 });
