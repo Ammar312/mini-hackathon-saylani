@@ -92,15 +92,20 @@ window.addEventListener("load", () => {
 
       globalBlogSection.appendChild(post);
       button.addEventListener("click", () =>
-        seeAllBlog(doc.data().userUID, doc.data().personName)
+        seeAllBlog(
+          doc.data().userUID,
+          doc.data().personName,
+          doc.data().imageURL
+        )
       );
     });
   });
 });
 
-const seeAllBlog = (uid, name) => {
+const seeAllBlog = (uid, name, url) => {
   sessionStorage.setItem("uid", uid);
   sessionStorage.setItem("name", name);
+  sessionStorage.setItem("url", url);
   console.log(name);
   setTimeout(() => {
     location.assign("userblog.html");

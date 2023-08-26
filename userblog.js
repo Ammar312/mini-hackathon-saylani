@@ -2,14 +2,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebas
 import {
   getFirestore,
   collection,
-  addDoc,
   query,
-  where,
   onSnapshot,
   orderBy,
-  serverTimestamp,
-  doc,
-  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -25,17 +20,20 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const uid = sessionStorage.getItem("uid");
 const name = sessionStorage.getItem("name");
-console.log(name);
+const url = sessionStorage.getItem("url");
+console.log(url);
 document.querySelector("#blog").innerText = `All from ${name}`;
+const picture = document.querySelector("#picture");
+picture.style.backgroundImage =
+  url === null ? "url('../fall.png')" : `url(${url})`;
 
 // const publishDate = new Date().toDateString();
 window.addEventListener("load", () => {
   const q = query(collection(db, uid), orderBy("createdAt", "desc"));
   const globalBlogSection = document.querySelector("#globalBlogSection");
-  const picture = document.querySelector("#picture");
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     globalBlogSection.innerHTML = "";
-    picture.innerHTML = "";
+
     querySnapshot.forEach((doc) => {
       //   const globalBlogDiv = document.createElement("div");
       //   globalBlogDiv.classList.add("globalBlogDiv");
@@ -80,17 +78,15 @@ window.addEventListener("load", () => {
 
       post.appendChild(head);
       post.appendChild(inputText);
-      //   globalBlogDiv.append(headline);
-      //   globalBlogDiv.appendChild(post);
       globalBlogSection.appendChild(post);
-      const pictureDiv = document.createElement("div");
-      pictureDiv.classList.add("pictureDiv");
-      pictureDiv.style.backgroundImage =
-        doc.data().imageURL !== null
-          ? `url(${doc.data().imageURL})`
-          : "url('../fall.png')";
+      // const pictureDiv = document.createElement("div");
+      // pictureDiv.classList.add("pictureDiv");
+      // pictureDiv.style.backgroundImage =
+      //   doc.data().imageURL !== null
+      //     ? `url(${doc.data().imageURL})`
+      //     : "url('../fall.png')";
 
-      picture.appendChild(pictureDiv);
+      // picture.appendChild(pictureDiv);
     });
   });
 });
