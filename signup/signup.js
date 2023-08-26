@@ -59,7 +59,7 @@ signupForm.addEventListener("submit", (e) => {
         console.log(currentUserUID);
         sessionStorage.setItem("currentUserUID", currentUserUID);
         setTimeout(() => {
-          location.assign("../home/home.html");
+          location.assign("../editprofile/editprofile.html");
         }, 2000);
 
         // ...

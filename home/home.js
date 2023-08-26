@@ -169,17 +169,17 @@ window.addEventListener("load", () => {
   });
 });
 
-const deletePostFunc = async (id, globalId) => {
+const deletePostFunc = async (id, globalTitle) => {
   try {
     // Delete from user's personal collection
     await deleteDoc(doc(db, currentUserUID, id));
 
     // Delete from global collection
     const globalQuerySnapshot = await getDocs(
-      query(collection(db, "global"), where("title", "==", globalId))
+      query(collection(db, "global"), where("title", "==", globalTitle))
     );
     globalQuerySnapshot.forEach(async (doc) => {
-      if (doc.data().title === globalId) {
+      if (doc.data().title === globalTitle) {
         await deleteDoc(doc.ref);
       }
     });
@@ -215,6 +215,18 @@ const editPostFunc = (id, title, text) => {
       title: editFormTitle.value,
       inputText: editFormText.value,
     });
+    const globalQuerySnapshot = await getDocs(
+      query(collection(db, "global"), where("title", "==", title))
+    );
+    globalQuerySnapshot.forEach(async (doc) => {
+      if (doc.data().title === title) {
+        await updateDoc(doc.ref, {
+          title: editFormTitle.value,
+          inputText: editFormText.value,
+        });
+      }
+    });
+    editFormFunc.reset();
     document.querySelector("#editFormDiv").style.display = "none";
     editForm.removeEventListener("submit", editFormFunc);
   };

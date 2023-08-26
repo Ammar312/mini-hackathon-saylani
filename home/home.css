@@ -26,6 +26,7 @@ body {
 }
 .jump {
   font-size: 1.2rem;
+  cursor: pointer;
 }
 .jump a {
   font-size: 1.2rem;
@@ -87,6 +88,10 @@ body {
 }
 .myBlog {
   margin: 0.7em 1em 0.2em;
+}
+#blog {
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 .blogSection {
   padding: 1.5em;
@@ -155,6 +160,10 @@ body {
   margin: 3px;
   color: blue;
 }
+.username a {
+  color: white;
+  text-decoration: none;
+}
 #username a {
   color: white;
   text-decoration: none;
@@ -179,6 +188,7 @@ body {
 }
 .picture {
   width: 300px;
+  min-width: 246px;
   height: 293px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -232,4 +242,10 @@ body {
 }
 .cross {
   color: white;
+}
+@media screen and (max-width: 920px) {
+  .userBlogSection {
+    flex-direction: column-reverse;
+    gap: 1.6em;
+  }
 }

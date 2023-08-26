@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebas
 import {
   getAuth,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -50,6 +51,21 @@ loginForm.addEventListener("submit", (e) => {
       displayAlert(errorMessage, "red");
       // ..
     });
+});
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    displayAlert("Already logged in", "green");
+    setTimeout(() => {
+      location.assign("home/home.html");
+    }, 2000);
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
 });
 
 const alertBox = document.querySelector("#alertBox");
