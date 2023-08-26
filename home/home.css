@@ -59,11 +59,11 @@ body {
   gap: 0.7em;
 }
 .blogFormTitle {
-  padding: 0.3em;
+  padding: 0.3em 0.7em;
   font-size: 1.2rem;
-  border-radius: 13px;
+  border-radius: 10px;
   border: 1px solid rgb(230, 230, 230);
-  outline: blue;
+  outline-color: blue;
   text-transform: capitalize;
 }
 .blogFormText {
@@ -155,8 +155,9 @@ body {
   margin: 3px;
   color: blue;
 }
-#username {
+#username a {
   color: white;
+  text-decoration: none;
 }
 
 .greetings {

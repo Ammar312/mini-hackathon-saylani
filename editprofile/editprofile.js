@@ -28,8 +28,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage();
 
-const userName = sessionStorage.getItem("currentUserName");
-const username = (document.querySelector("#username").innerText = userName);
+// const userName = sessionStorage.getItem("currentUserName");
+// const username = (document.querySelector("#username").innerText = userName);
 
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
@@ -51,12 +51,15 @@ onAuthStateChanged(auth, (user) => {
     // ------Edit Profile Image------
     const uploadBtn = document.querySelector("#uploadBtn");
     const uploadProgress = document.getElementById("uploadProgress");
+    const progressPercent = document.querySelector("#progressPercent");
     uploadBtn.addEventListener("click", () => {
       uploadProgress.style.display = "block";
+      progressPercent.style.display = "block";
       const fileInput = document.querySelector("#fileInput");
       const file = fileInput.files[0];
       console.log(file);
       if (file) {
+        profileimg.classList.add("opacityDown");
         const storageRef = ref(storage, "images/" + file.name);
         const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -65,6 +68,7 @@ onAuthStateChanged(auth, (user) => {
           (snapshot) => {
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progressPercent.innerText = `${progress}%`;
             uploadProgress.value = progress;
           },
           (error) => {
@@ -81,8 +85,11 @@ onAuthStateChanged(auth, (user) => {
                 .then(() => {
                   // Profile updated!
                   uploadBtn.style.display = "none";
+                  profileimg.classList.remove("opacityDown");
                   setTimeout(() => {
+                    progressPercent.style.display = "none";
                     uploadProgress.style.display = "none";
+                    location.reload();
                   }, 2000);
                 })
                 .catch((error) => {

@@ -14,7 +14,13 @@
     <nav class="nav" id="signupNav">
       <div class="webName">Personal Blogging App</div>
       <div class="rightSide">
-        <div class="username" id="username">Ammar Ul Mustafa</div>
+        <div class="username" id="username">
+          <a
+            href="../editprofile/editprofile.html"
+            id="usernamea"
+            title="Edit Profile"
+          ></a>
+        </div>
         <div class="jump">Logout</div>
       </div>
     </nav>
@@ -31,13 +37,21 @@
           class="blogFormTitle"
           placeholder="Title"
         />
-        <input
+        <textarea
+          name=""
+          id="inputText"
+          class="blogFormText"
+          placeholder="What's in your mind"
+          cols="30"
+          rows="10"
+        ></textarea>
+        <!-- <input
           type="text"
           name=""
           id="inputText"
           class="blogFormText"
           placeholder="What's in your mind"
-        />
+        /> -->
         <button type="submit" class="blogFormBtn">Publish Blog</button>
       </form>
     </div>

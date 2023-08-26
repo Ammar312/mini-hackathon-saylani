@@ -14,7 +14,9 @@
     <nav class="nav" id="signupNav">
       <div class="webName">Personal Blogging App</div>
       <div class="rightSide">
-        <div class="username" id="username"></div>
+        <div class="username" id="username">
+          <a href="../home/home.html">Back to dashboard</a>
+        </div>
         <div class="jump">Logout</div>
       </div>
     </nav>
@@ -37,7 +39,8 @@
           max="100"
           id="uploadProgress"
           class="uploadProgress"
-        ></progress>
+        ></progress
+        ><span id="progressPercent" class="progressPercent"></span>
         <button id="uploadBtn" class="uploadBtn">Upload</button>
       </div>
       <form id="updateDisplayNameForm">

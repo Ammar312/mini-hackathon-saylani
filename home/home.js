@@ -32,7 +32,7 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 const userName = sessionStorage.getItem("currentUserName");
-const username = (document.querySelector("#username").innerText = userName);
+const username = (document.querySelector("#usernamea").innerText = userName);
 const currentUserUID = sessionStorage.getItem("currentUserUID");
 onAuthStateChanged(auth, (user) => {
   if (user) {
