@@ -21,7 +21,7 @@
             title="Edit Profile"
           ></a>
         </div>
-        <div class="jump">Logout</div>
+        <div class="jump" id="logout">Logout</div>
       </div>
     </nav>
     <div class="dashboard">
@@ -64,7 +64,14 @@
         <input type="text" id="editFormTitle" class="editFormInput" />
         <br />
         <label for="text">Text</label>
-        <input type="text" id="editFormText" class="editFormInput" />
+        <textarea
+          name=""
+          id="editFormText"
+          class="editFormInput"
+          cols="23"
+          rows="5"
+        ></textarea>
+        <!-- <input type="text" id="editFormText" class="editFormInput" /> -->
         <br />
         <input type="submit" name="" id="editFormBtn" class="editFormButton" />
       </form>

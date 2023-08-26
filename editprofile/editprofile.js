@@ -10,6 +10,7 @@ import {
   updateProfile,
   onAuthStateChanged,
   updatePassword,
+  signOut,
 } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -155,6 +156,18 @@ onAuthStateChanged(auth, (user) => {
       } else {
         console.log("password must be same");
       }
+    });
+
+    const logout = document.querySelector("#logout");
+    logout.addEventListener("click", () => {
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          location.replace("../login.html");
+        })
+        .catch((error) => {
+          // An error happened.
+        });
     });
   } else {
     // User is signed out

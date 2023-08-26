@@ -200,7 +200,7 @@ body {
   position: sticky;
   position: -webkit-sticky;
   left: 10vw;
-  bottom: 30vh;
+  bottom: 25vh;
   width: 80%;
   /* max-width: 70vw; */
   background-color: rgb(51, 52, 53);

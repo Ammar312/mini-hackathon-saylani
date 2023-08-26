@@ -11,10 +11,12 @@ import {
   doc,
   deleteDoc,
   getDocs,
+  updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
 import {
   getAuth,
   onAuthStateChanged,
+  signOut,
 } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -74,6 +76,18 @@ onAuthStateChanged(auth, (user) => {
       } catch (e) {
         console.error("Error adding document: ", e);
       }
+    });
+    // .......signout.........
+    const logout = document.querySelector("#logout");
+    logout.addEventListener("click", () => {
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          location.replace("../login.html");
+        })
+        .catch((error) => {
+          // An error happened.
+        });
     });
 
     // ...
@@ -195,10 +209,16 @@ const editPostFunc = (id, title, text) => {
   const editFormText = document.querySelector("#editFormText");
   editFormTitle.value = title;
   editFormText.value = text;
-  editForm.addEventListener("submit", (e) => {
+  const editFormFunc = async (e) => {
     e.preventDefault();
+    await updateDoc(doc(db, currentUserUID, id), {
+      title: editFormTitle.value,
+      inputText: editFormText.value,
+    });
     document.querySelector("#editFormDiv").style.display = "none";
-  });
+    editForm.removeEventListener("submit", editFormFunc);
+  };
+  editForm.addEventListener("submit", editFormFunc);
 };
 
 const cross = document.querySelector("#cross");
