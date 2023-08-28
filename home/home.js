@@ -83,7 +83,7 @@ onAuthStateChanged(auth, (user) => {
       signOut(auth)
         .then(() => {
           // Sign-out successful.
-          location.replace("../login.html");
+          location.replace("../index.html");
         })
         .catch((error) => {
           // An error happened.
@@ -94,6 +94,10 @@ onAuthStateChanged(auth, (user) => {
   } else {
     // User is signed out
     // ...
+    displayAlert("You're not login", "black");
+    setTimeout(() => {
+      location.replace("../index.html");
+    }, 2000);
     console.log("error");
   }
 });
@@ -226,7 +230,7 @@ const editPostFunc = (id, title, text) => {
         });
       }
     });
-    editFormFunc.reset();
+    editForm.reset();
     document.querySelector("#editFormDiv").style.display = "none";
     editForm.removeEventListener("submit", editFormFunc);
   };
@@ -238,3 +242,14 @@ cross.addEventListener("click", () => {
   const editFormDiv = document.querySelector("#editFormDiv");
   editFormDiv.style.display = "none";
 });
+
+const alertBox = document.querySelector("#alertBox");
+const displayAlert = (txt, clss) => {
+  alertBox.textContent = txt;
+  alertBox.classList.add(clss);
+  // remove alert
+  setTimeout(() => {
+    alertBox.textContent = "";
+    alertBox.classList.remove(clss);
+  }, 2000);
+};

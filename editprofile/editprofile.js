@@ -163,7 +163,7 @@ onAuthStateChanged(auth, (user) => {
       signOut(auth)
         .then(() => {
           // Sign-out successful.
-          location.replace("../login.html");
+          location.replace("../index.html");
         })
         .catch((error) => {
           // An error happened.

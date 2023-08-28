@@ -46,8 +46,8 @@ body {
 .profileSection {
   display: flex;
   flex-direction: column;
-  width: 881px;
-  height: 748px;
+  width: 715px;
+  height: 740px;
   margin: 3em 6em;
   padding: 1.5em;
   border: 1px solid#DEE2E6;
